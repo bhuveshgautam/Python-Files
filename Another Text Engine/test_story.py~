@@ -1,0 +1,3 @@
+import Area from area
+import Item from item
+import Player from player

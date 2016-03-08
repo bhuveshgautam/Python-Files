@@ -1,0 +1,28 @@
+class Area:
+    """
+    Class describing a basic area, including the title, description,
+    links to other areas, and links to items.
+    """
+    def __init__(self, title, description):
+        """
+        Takes the title and description of an area
+        and sets them appropriately
+        """
+        self.title = title
+        self.description = description
+        self.links = {}
+        self.items = {}
+
+    def addLink(self, com, area):
+        """
+        Adds a link to another area to self's links list so a user can
+        access other areas through this one.
+
+        com: string | The string through which a player can access the area
+        area: Area  | The area being linked
+        Returns None
+        """
+        if com in self.links.keys():
+            raise ValueError(com + ": already in use!")
+        else:
+            self.links[com] = area

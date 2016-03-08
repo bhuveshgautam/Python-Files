@@ -1,0 +1,108 @@
+class Area:
+    """
+    Class describing a basic area, including the title, description,
+    links to other areas, and links to items.
+    """
+    def __init__(self, title, description):
+        """
+        Takes the title and description of an area
+        and sets them appropriately
+        """
+        self.title = title
+        self.description = description
+        self.links = {}
+        self.items = {}
+        self.event = lambda: None
+
+    def addLink(self, com, area):
+        """
+        Adds a link to another area to self's links list so a user can
+        access other areas through this one.
+
+        com: string | A lowercase string through which a player can access the area
+        area: Area  | The area being linked
+        Returns None
+        """
+        if com in self.links.keys():
+            raise ValueError(com + " <- already in use!")
+        else:
+            self.links[com] = area
+
+    def addItem(self, com, item):
+        """
+        Adds a link to an item accessable through self.
+
+        com: string | A lowercase string the player uses to interact with the item.
+        item: Item  | The item being linked to.
+        Returns None
+        """
+        if com in self.items.keys():
+            raise ValueError(com + " <- already in use!")
+        else:
+            self.items[com] = item
+
+    def getLinkedAreas(self):
+        """
+        Returns the list of linked areas.
+
+        return: list | The list of all areas linked to self
+        """
+        return self.links
+
+    def getItem(self, com):
+        """
+        Retrieves, but does not remove, the item linked to com in self.
+
+        com: string | A lowercase string connected with an item in self
+        return: Item | The item connected with com
+        """
+        try:
+            return self.items[com]
+        except KeyError:
+            raise ValueError(com + " <- not an item!")
+
+    def takeItem(self, com):
+        """
+        Retrieves and removes the item commencted to com from self.
+
+        com: string | A lowercase string connected with an item in self
+        return: Item | The item connected with com
+        """
+        try:
+            return self.items.pop(com)
+        except KeyError:
+            raise ValueError(com + " <- not an item!")
+
+    def getTitle(self):
+        """
+        Returns the title of self.
+
+        return: string | The title of self.
+        """
+        return self.title
+
+    def getDescription(self):
+        """
+        Returns the description of self.
+
+        return: string | The descripion of self.
+        """
+        return self.description
+
+    def setEvent(self, event):
+        """
+        Sets the fucntion to be executed every time the area is loaded.
+
+        event: function -> None | A function of zero arguments that is executed
+                                  every time the area is loaded.
+        return: None
+        """
+        self.event = event
+
+    def executeEvent(self):
+        """
+        Executes the event function
+
+        return: None
+        """
+        self.event()

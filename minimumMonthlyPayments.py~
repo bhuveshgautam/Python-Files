@@ -1,0 +1,10 @@
+def payer(balance, interest, payment):
+    remainingBalance = balance
+    index = 1
+
+    while index <= 12:
+        temp = remainingBalance - payment
+        remainingBalance = temp + temp * (interest / 12.0)
+        index += 1
+
+    return remainingBalance

@@ -1,0 +1,10 @@
+import Window from window
+import Door from door
+import openclosefuncs
+
+def main():
+    lst = [Door("opened"), Door(), Door(), Window("opened"),
+           Window(), Door(), Window("opened"), Window("opened")]
+
+    openclosefuncs.closeAll(lst)
+    openclosefuncs.openAll(lst)

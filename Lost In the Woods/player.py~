@@ -1,0 +1,50 @@
+import item
+
+def Player:
+    """
+    A class containing the current state of the game:
+        The current area the player is in
+        The player's inventory
+    """
+    def __init__(self):
+        """
+        Initializes the player class.
+        """
+        self.area = None
+        self.inventory = {}
+
+    def useItem(self, com):
+        """
+        Calls the action of the item associated with com.
+
+        com: string | A lowercase string associated with an item in inventory
+        return: boolean | True if executed successfully, False is item is not in
+                          inventory.
+        """
+        try:
+            self.inventory[com].executeAction(self.area)
+            return True
+        except KeyError:
+            return False
+
+    def addItem(self, item):
+        """
+        Adds an item to the inventory.
+
+        item: Item | The item to be added to the inventory
+        return: None
+        """
+        name = item.getName()
+
+        if name in inventory:
+            raise ValueError(name + " <- already in inventory!")
+        else:
+            self.inventory[name] = item
+
+    def getArea(self):
+        """
+        Returns the area the player is currently in.
+
+        return: Area | The area the player is currently in.
+        """
+        return self.area

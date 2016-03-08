@@ -1,0 +1,7 @@
+def powersOfTwo():
+    i = 0
+    def iter():
+        yield 2 ** i
+        i += 1
+        iter()
+    return iter

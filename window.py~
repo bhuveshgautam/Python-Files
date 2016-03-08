@@ -1,0 +1,17 @@
+class Window(object):
+    def __init__(self):
+        self.state = "closed"
+
+    def open(self):
+        if self.state == "opened":
+            print "Window already opened!"
+        else:
+            self.state = "opened"
+            print "Window opened!"
+
+    def close(self):
+        if self.state == "closed":
+            print "Window already closed!"
+        else:
+            self.state = "closed"
+            print "Window closed!"

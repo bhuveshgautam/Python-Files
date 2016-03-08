@@ -1,0 +1,19 @@
+def payer(balance, interest, payment):
+    """
+    balance: int or float > 0.0
+    interest: float < 1.0
+    payment: int or float > 0.0
+
+    Calculates the remainder of balance after a year
+    of monthly payments at payment and an interest
+    rate of interest.
+    """
+    
+    remainder = balance
+    
+
+    for _ in range(1, 13):
+        temp = remainder - payment
+        remainder = temp + temp * (interest / 12.0)
+
+    return remainder

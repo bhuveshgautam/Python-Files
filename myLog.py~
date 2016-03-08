@@ -1,0 +1,9 @@
+def myLog(x, b):
+    test = 0
+    temp = x ** test
+
+    while temp <= x:
+        test += 1
+        temp = x ** test
+
+    return test

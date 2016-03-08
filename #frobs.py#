@@ -1,0 +1,51 @@
+class Frob(object):
+    def __init__(self, name):
+        self.name = name
+        self.before = None
+        self.after = None
+    def setBefore(self, before):
+        self.before = before
+    def setAfter(self, after):
+        self.after = after
+    def getBefore(self):
+        return self.before
+    def getAfter(self):
+        return self.after
+    def myName(self):
+        return self.name
+
+def insert(atMe, newFrob):
+    """
+    atMe: a Frob that is part of a doubly linked list
+    newFrob:  a Frob with no links 
+    This procedure appropriately inserts newFrob into the linked list that atMe
+    is a part of.
+    """
+    def forwardInsert(atMe, newFrob):
+        if atMe.getAfter() == None:
+            atMe.setAfter(newFrob)
+            newFrob.setBefore(atMe)
+        elif atMe.getAfter().myName() >= newFrob.myName():
+            newFrob.setBefore(atMe)
+            newFrob.setAfter(atMe.getAfter())
+            atMe.getAfter().setBefore(newFrob)
+            atMe.setAfter(newFrob)
+        else:
+            forwardInsert(atMe.getAfter(), newFrob)
+
+    def backwardInsert(atMe, newFrob):
+        if atMe.getBefore() == None:
+            atMe.setBefore(newFrob)
+            newFrob.setAfter(atMe)
+        elif atMe.getBefore().myName() <= newFrob.myName():
+            newFrob.setAfter(atMe)
+            newFrob.setBefore(atMe.getBefore())
+            atMe.getBefore().setAfter(newFrob)
+            atMe.setBefore(newFrob)
+        else:
+            backwardInsert(atMe.getBefore(), newFrob)
+
+    if atMe.myName() < newFrob.myName():
+        forwardInsert(atMe, newFrob)
+    else:
+        backwardInsert(atMe, newFrob)

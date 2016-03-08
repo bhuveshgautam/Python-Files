@@ -1,0 +1,12 @@
+def countBobs(s):
+    index = 0
+    count = 0
+    st = s
+    
+    while index != -1:
+        index = st.find('bob')
+        if index != -1:
+            st = st[(index + 2):]
+            count += 1
+
+    print("Number of times bob occurs is : " + str(count))

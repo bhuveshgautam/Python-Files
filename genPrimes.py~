@@ -1,0 +1,11 @@
+def genPrimes():
+    primes = []
+    current = 2
+    while True:
+        flag = True
+        for p in primes:
+            if (current % p) == 0:
+                flag = False
+
+        if flag == True:
+            yield current

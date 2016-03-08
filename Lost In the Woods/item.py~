@@ -1,0 +1,16 @@
+class Item:
+    """
+    A class for describing items found throughout the game.
+    """
+    def __init__(self, name, description)
+        """
+        Takes name and description and assigns them accordingly.
+
+        name: string | The name of self
+        description: string | The description of self
+        """
+        self.name = name
+        self.description = description
+        self.action = lambda (area): raise NotImplementedError("No action " +
+                                                               "implemented for -> " +
+                                                               self.name)

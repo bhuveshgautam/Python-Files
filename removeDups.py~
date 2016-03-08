@@ -1,0 +1,4 @@
+def removeDups(L1, L2):
+    for el in L1:
+        if el in L2:
+            L1.remove(el)

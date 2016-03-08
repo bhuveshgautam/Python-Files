@@ -1,0 +1,9 @@
+def divide(x, y):
+    try:
+        result = x / y
+    except ZerDivisionError, e:
+        print "Division by zero! " + str(e)
+    else:
+        print "Result is ", result
+    finally:
+        print "Executing finally clause"

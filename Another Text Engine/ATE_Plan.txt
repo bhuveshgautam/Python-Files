@@ -1,0 +1,221 @@
+Goals:
+	1. Be able to move from area to area
+		- Able to choose from multiple areas in an area
+		- Have events in certain areas that change other things in the game
+		  | Activate when area is entered
+		  | Able to change inventory
+		  | Able to affect other areas
+		  | Able to move player to another area
+		- Have multiple names referring to the area
+		  | EG: "There is a cabin to the north."
+			> "go north" and "go to cabin" are both viable options
+		- Have special commands per area
+		  | Like opening a car door when in an area with a car
+	2. Be able to grab items from the environment and use them
+		- Have multiple names refer to an object
+		  | EG: "There are some car keys at your feet"
+		    > "pick up car keys" and "pick up keys" are both viable options
+		- Keep an inventory
+		  | Able to inspect inventory
+		- Able to pick up items from current area
+		- Able to inspect item in inventory at any time, or items from current
+		  area
+		- Able to use item in inventory at any time
+		  | Able to change inventory
+		  | Able to affect areas, including ones outside current player's area
+		  | Able to move player to another area
+		  
+Stretch Goals:
+	1. Be able to save game and load it again later
+		- Save inventory, current area player is in, and the state of all the areas in the game
+	2. Make a nice GUI
+		- Have save and load options
+		- Have the global commands available in a drop-down menu
+		- Let the user customize interface with font and color
+
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||| Blueprint ||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+Example:
+	
+	You find yourself stranded in the middle of a road.  Looking to either side, you see nothing but
+	nondescript forest.  It appears your only path is either forward, farther down to where you were
+	apparently going, or backwards, from where you apparently came.  There is a keychain at your
+	feet.  There is a wallet laying on the road to your left.
+	
+	>> examine inventory
+	
+	There's nothing there!
+	
+	>> Look at keys
+	
+	Grabbing the keychain you see it's made up of three keys and a key fob with the word "TESIN"
+	inscribed on a tiny computer mouse.  Two of the keys are rather plain but the third has a Toyota
+	symbol on it.  You put the keychain back.
+	
+	>> Grab keys
+	
+	Keychain added to your inventory!
+	b
+	>> inspect Inventory
+	
+	Currently you're carrying: keys
+	
+	>> look around
+	
+	You find yourself stranded in the middle of a road.  Looking to either side, you see nothing but
+	nondescript forest.  It appears your only path is either forward, farther down to where you were
+	apparently going, or backwards, from where you apparently came.  There is a wallet laying on the
+	road to your left.
+	
+	>> go north
+	
+	You don't know how to get there!
+	
+	>> go to the beach
+	
+	You don't know how to get there!
+	
+	>> go right
+	
+	You don't know how to get there!
+	
+	>> go diagonal
+	
+	You don't know how to get there!
+	
+	>> go forward
+	
+	After a few hours of walking you notice it's starting to get dark.  You decided it would be
+	better to set up camp before it gets completely dark, so you head to a clearing on the side
+	of the road.  As you start looking for a suitable place to lay down you hear what sounds
+	like footsteps approaching behind you.  Before you can turn around, all goes black.
+	
+	You're never heard from again.
+	
+	[program exits]
+	[program starts]
+	
+	A Lonely Road
+	
+	You find yourself stranded in the middle of a road.  Looking to either side, you see nothing but
+	nondescript forest.  It appears your only path is either forward, farther down to where you were
+	apparently going, or backwards, from where you apparently came.  There is a keychain at your
+	feet.  There is a wallet laying on the road to your left.
+	
+	>> take keychain
+	
+	Keychain added to your inventory.
+	
+	>> go backwards
+	
+	The Deserted Stretch
+	
+	As you walk along the deserted road, you see a mid-nineties Toyota Corolla stranded in the
+	emergency lane.  It's starting to get dark out and you think you hear something rustling
+	in the woods.  You can keep going forward, but it may be safer to try and get in the car.
+	
+	>> Walk to toyota
+	
+	The Car
+	
+	Looking through the driver's side window you see an interior that looks spotless.  There's
+	a coffee cup seated in the console.
+	
+	>> open door
+	
+	You try the handle but the door is locked.
+	
+	>> use keys
+	
+	Using they keys you found, you successfully unlock the car door.
+	
+	>> open door
+	
+	You open the car door and get in.  As you sit down you feel a strange surge of familiarity.
+	There's an empty coffee cup in the console.
+	
+	>>
+	
+Files:
+  global_commands.py:
+    Variables:
+		| global_commands
+		  : Keys beings lists of commands and values being functions
+	Functions:
+		| _travel(Player, Area, elem)
+		  : Player is always the current state of the player and
+		    Area is always the current area and
+			elem is a string indicating destination
+		| _pickup(Player, Area, elem)
+		  : Player is always the current state of the player and
+		    Area is always the current area and
+			elem is a string indicating item
+		| _use(Player, Area, elem)
+		  : Player is always the current state of the player and
+		    Area is always the current area and
+			elem is a string indicating item
+		| _inspect(Player, Area, elem)
+		  : Player is always the current state of the player and
+		    Area is always the current area and
+			elem is a string indicating element
+  area.py:
+	Classes:
+		| Area
+			- Instantiate with description and inspectString
+				| Set item list to []
+				  : Keys being the name used to access and values being Item objects
+				| Set linked area list to {}
+				  : Keys being the name used to access and values being Area objects
+				| Set event to printDescription (A function defined internally to __init__)
+				  : Function to take an Area (always the area it's in)
+					and Player objects and return None
+				| Set commands dictionary to global_commands.global_commands
+			      : Keys being the command and values being functions that take
+					an Area (always the area it's in), the Player object, and
+					elem, the element the command is acted upon.
+			- Method for getting identifier list (getIdentifierList())
+			- Method for getting description (getDescription())
+			- Method for getting the inspect string (getInspectString())
+			- Method for getting linked area list (getLinkedList())
+			- Method for getting item list (getItemList())
+			- Method for adding commands (addCommand(list, function))
+			  : Takes a list of strings and
+			    a function that takes an Area object (always the current area)
+				a Player object, and a elem
+			- Method for setting the event (setEvent(function))
+			  : Takes a function that takes a Player object and
+			    an Area object
+		    - Method for adding an item (addItem(Item))
+			  : Takes a list of item identifiers 
+			- Method for adding linked area (addLink(Area))
+			- Method for taking an item (takeItem(elem))
+			  : Takes a elem string associated with an item
+			    and returns a tuple with the item identifiers and item
+				as well as removes it from the items dictionary.
+			- Method for executing commands (executeCommand(Player, command))
+			  : Takes a Player object and a command string
+			- Method for executing the event (executeEvent(Player))
+			  : Takes a Player object
+  item.py:
+	Classes:
+		| Item
+			- Instantiate with identifier list, description, and area string
+			  | Sets use function to lambda x,y: None
+			- Method for getting identifier list (getIdentifierList())
+			- Method for getting description (getDescription())
+			- Method for getting area string (getAreaDescription())
+			- Method for setting use function (setUseFunction(function))
+			- Method for using item
+			  : Takes Player object and Area object of current area
+  player.py:
+	Classes:
+		| Player
+			- Instantiate with starting Area object
+			  | Set inventory list to []
+			- Method for adding to inventory list (addToInventory(Item))
+			- Method for removing from inventory list (removeFromInventory(Item))
+			- Method for getting inventory list (getInventory())
+			- Method for loading new Area (loadArea(Area))
+			- Method for starting game loop (play())

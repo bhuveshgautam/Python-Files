@@ -1,0 +1,30 @@
+from area import Area
+from item import Item
+from player import Player
+
+start = Area(
+    "You find yourself stranded in the middle of a road.  Looking to either "
+    "side you see nothing but nondescript forest.  It appears your only "
+    "path is either forward, farther down to where you were apparently "
+    "going, or backwards, from where you apparently came. ",
+    "A barren stretch of road.  How did you end up there? "
+    )
+
+keychain = Item(
+    frozenset(["keys", "keychain", "key"]),
+    "The keychain is made up of three keys and a key fob with the word "
+    "\"TESIN\" inscribed on a tiny, rubber computer mouse.  Two of the keys "
+    "are rather plain but the third has a Toyota symbol on it. ",
+    "There is a keychain at your feet. "
+    )
+
+wallet = Item(
+    frozenset(["wallet", "billfold", "pocketbook"]),
+    "Looking inside the wallet, you find a small photo of yourself with your "
+    "arm around someone's sholders.  There's a couple fives as well as an old "
+    "library card. ",
+    " There is a wallet laying on the road to your left. "
+    )
+
+start.addItem(keychain)
+start.addItem(wallet)
